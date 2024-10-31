@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const heroSchema = new Schema({
     nickname: {
@@ -18,6 +18,7 @@ const heroSchema = new Schema({
     superpowers: {
         type: Array,
         default: [],
+        required: true,
     },
     catch_phrase: {
         type: String,
@@ -29,4 +30,4 @@ const heroSchema = new Schema({
     },
 });
 
-export const Hero = new Schema("Hero", heroSchema);
+export const Hero = model("Hero", heroSchema);

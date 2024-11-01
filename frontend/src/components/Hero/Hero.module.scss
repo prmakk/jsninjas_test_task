@@ -1,0 +1,73 @@
+@import "../../styles/variables.scss";
+
+.hero {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    border: 1px solid lightgrey;
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    gap: 20px;
+    transition: 0.1s all ease-out;
+
+    &:hover {
+        -webkit-box-shadow: 0px 10px 23px -12px rgba(0, 0, 0, 0.35);
+        -moz-box-shadow: 0px 10px 23px -12px rgba(0, 0, 0, 0.35);
+        box-shadow: 0px 10px 23px -12px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav {
+        position: absolute;
+        right: -10px;
+        top: -10px;
+        background-color: lighten($mainColor, 30%);
+        padding: 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        :nth-child(n) {
+            cursor: pointer;
+        }
+    }
+
+    .image {
+        max-width: 150px;
+        width: 100%;
+        background-image: url("https://static.wikia.nocookie.net/marvel_dc/images/a/a5/Superman_Vol_5_1_Textless.jpg");
+        aspect-ratio: 1/1;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        border-radius: 50%;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .nickname {
+            font-weight: 800;
+            color: $mainColor;
+            font-size: clamp(22px, 3vw, 30px);
+        }
+
+        .name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .abilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .description {
+            font-size: 14px;
+        }
+    }
+}

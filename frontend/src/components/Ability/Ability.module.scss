@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+
+.ability {
+    padding: 5px 10px;
+    border: 1px solid lighten($mainColor, 10%);
+    border-radius: 5px;
+    transition: 0.1s all ease-in-out;
+
+    p {
+        font-size: 14px;
+    }
+
+    &:hover {
+        background-color: lighten($mainColor, 30%);
+    }
+}

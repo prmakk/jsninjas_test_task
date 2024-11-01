@@ -1,13 +1,14 @@
 @import "../../styles/variables.scss";
 
 .hero {
+    text-decoration: none;
     position: relative;
     max-width: 600px;
-    width: 100%;
     border: 1px solid lightgrey;
     padding: 20px;
     border-radius: 20px;
     display: flex;
+    align-items: center;
     gap: 20px;
     transition: 0.1s all ease-out;
 
@@ -49,15 +50,24 @@
         flex-direction: column;
         gap: 10px;
 
-        .nickname {
-            font-weight: 800;
-            color: $mainColor;
-            font-size: clamp(22px, 3vw, 30px);
+        a {
+            text-decoration: none;
+
+            .nickname {
+                font-weight: 800;
+                color: $mainColor;
+                font-size: clamp(22px, 3vw, 30px);
+
+                &:hover {
+                    color: darken($mainColor, 10%);
+                }
+            }
         }
 
         .name {
             font-weight: 600;
             font-size: 16px;
+            color: #000;
         }
 
         .abilities {
@@ -69,5 +79,16 @@
         .description {
             font-size: 14px;
         }
+
+        .phrase {
+            text-align: center;
+            font-weight: 800;
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .hero {
+        flex-direction: column;
     }
 }

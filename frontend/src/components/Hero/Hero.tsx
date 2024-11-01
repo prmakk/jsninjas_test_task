@@ -3,8 +3,17 @@ import { Pencil, Trash } from "lucide-react";
 
 import styles from "./Hero.module.scss";
 import Ability from "../Ability/Ability";
+import IHero from "../../types/types";
+import { Link } from "react-router-dom";
 
-const Hero: FC = () => {
+const Hero: FC<IHero> = ({
+    _id,
+    nickname,
+    real_name,
+    origin_description,
+    superpowers,
+    catch_phrase,
+}) => {
     const [isHovered, setIsHovered] = useState<boolean>(false);
 
     return (
@@ -23,17 +32,17 @@ const Hero: FC = () => {
             <div className={styles.image}></div>
 
             <div className={styles.info}>
-                <h3 className={styles.nickname}>Superman</h3>
-                <p className={styles.name}>Clark Kent</p>
+                <Link to={`/heroes/${_id}`}>
+                    <h3 className={styles.nickname}>{nickname}</h3>
+                </Link>
+                <p className={styles.name}>{real_name}</p>
                 <div className={styles.abilities}>
-                    <Ability ability="Flight" />
-                    <Ability ability="Regeneration" />
+                    {superpowers?.map((power) => (
+                        <Ability ability={power} key={power} />
+                    ))}
                 </div>
-                <p className={styles.description}>
-                    He was born Kal-El on the planet Krypton, before being
-                    rocketed to Earth as an infant by his scientist father
-                    Jor-El, moments before Krypton's destruction…
-                </p>
+                <p className={styles.description}>{origin_description}</p>
+                <p className={styles.phrase}>{catch_phrase}</p>
             </div>
         </div>
     );

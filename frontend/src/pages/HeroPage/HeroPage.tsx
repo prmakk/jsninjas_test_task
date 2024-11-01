@@ -1,5 +1,6 @@
 import { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 import styles from "./HeroPage.module.scss";
 import { useHeroStore } from "../../store/heroes.store";
@@ -7,11 +8,26 @@ import Hero from "../../components/Hero/Hero";
 
 const HeroPage: FC = () => {
     const { id } = useParams();
-    const { fetchOneHero, oneHero, isLoading } = useHeroStore();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const { fetchOneHero, oneHero, isLoading, isDeleted, setIsDeleted } =
+        useHeroStore();
 
     useEffect(() => {
         fetchOneHero(id!);
     }, []);
+
+    useEffect(() => {
+        if (isDeleted && location.pathname !== "/") {
+            setIsDeleted(false);
+            toast("You will be redirected to the homepage in 3 seconds!", {
+                icon: "⚠️",
+            });
+            setTimeout(() => {
+                navigate("/");
+            }, 3000);
+        }
+    }, [isDeleted, navigate, setIsDeleted]);
 
     return (
         <div className={styles.hero}>

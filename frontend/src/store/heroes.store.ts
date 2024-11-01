@@ -7,13 +7,20 @@ interface IStore {
     allHeroes: IHero[] | null;
     oneHero: IHero | null;
     isLoading: boolean;
+    isDeleted: boolean;
+    setIsDeleted: (value: boolean) => void;
     fetchAllHeroes: () => Promise<void>;
     fetchOneHero: (id: string) => Promise<void>;
+    deleteHero: (id: string) => Promise<void>;
 }
 
 export const useHeroStore = create<IStore>((set) => ({
     allHeroes: null,
     isLoading: false,
+    isDeleted: false,
+    setIsDeleted: (value) => {
+        set({ isDeleted: value });
+    },
     oneHero: null,
     fetchAllHeroes: async () => {
         set({ isLoading: true });
@@ -36,6 +43,18 @@ export const useHeroStore = create<IStore>((set) => ({
         } catch (error: any) {
             toast.error(error.response.data.message || "An error occurred");
             set({ isLoading: false, oneHero: null });
+        }
+    },
+    deleteHero: async (id) => {
+        try {
+            await axios.delete(`/api/v1/delete/${id}`);
+            set((state) => ({
+                allHeroes: state.allHeroes!.filter((hero) => hero._id !== id),
+                isDeleted: true,
+            }));
+            toast.success("Hero deleted successfully");
+        } catch (error: any) {
+            toast.error(error.response.data.message || "An error occurred");
         }
     },
 }));

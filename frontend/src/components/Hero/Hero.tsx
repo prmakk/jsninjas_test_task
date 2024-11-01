@@ -5,6 +5,7 @@ import styles from "./Hero.module.scss";
 import Ability from "../Ability/Ability";
 import IHero from "../../types/types";
 import { Link } from "react-router-dom";
+import { useHeroStore } from "../../store/heroes.store";
 
 const Hero: FC<IHero> = ({
     _id,
@@ -15,6 +16,7 @@ const Hero: FC<IHero> = ({
     catch_phrase,
 }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const { deleteHero } = useHeroStore();
 
     return (
         <div
@@ -25,7 +27,7 @@ const Hero: FC<IHero> = ({
             {isHovered ? (
                 <div className={styles.nav}>
                     <Pencil size={18} />
-                    <Trash size={18} />
+                    <Trash size={18} onClick={() => deleteHero(_id)} />
                 </div>
             ) : null}
 

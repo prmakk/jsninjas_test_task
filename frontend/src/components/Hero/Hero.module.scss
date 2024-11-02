@@ -4,6 +4,7 @@
     text-decoration: none;
     position: relative;
     max-width: 600px;
+    width: calc(100% - 40px);
     border: 1px solid lightgrey;
     padding: 20px;
     border-radius: 20px;
@@ -35,6 +36,7 @@
     }
 
     .image {
+        flex-shrink: 0;
         max-width: 150px;
         width: 100%;
         background-image: url("https://static.wikia.nocookie.net/marvel_dc/images/a/a5/Superman_Vol_5_1_Textless.jpg");

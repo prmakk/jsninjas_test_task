@@ -12,9 +12,10 @@ interface IStore {
     fetchAllHeroes: () => Promise<void>;
     fetchOneHero: (id: string) => Promise<void>;
     deleteHero: (id: string) => Promise<void>;
+    addHero: (inputData: any) => Promise<void>;
 }
 
-export const useHeroStore = create<IStore>((set) => ({
+export const useHeroStore = create<IStore>((set, get) => ({
     allHeroes: null,
     isLoading: false,
     isDeleted: false,
@@ -53,6 +54,15 @@ export const useHeroStore = create<IStore>((set) => ({
                 isDeleted: true,
             }));
             toast.success("Hero deleted successfully");
+        } catch (error: any) {
+            toast.error(error.response.data.message || "An error occurred");
+        }
+    },
+    addHero: async (inputData) => {
+        try {
+            await axios.post("/api/v1/create", inputData);
+            await get().fetchAllHeroes();
+            toast.success("Hero added successfully");
         } catch (error: any) {
             toast.error(error.response.data.message || "An error occurred");
         }

@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
 import styles from "./HeroPage.module.scss";

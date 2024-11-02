@@ -1,5 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { CircleX, Upload } from "lucide-react";
+
+import { useHeroStore } from "../../store/heroes.store";
 
 import styles from "./Modal.module.scss";
 
@@ -8,9 +10,28 @@ interface IModal {
 }
 
 const Modal: FC<IModal> = ({ onClose }) => {
+    const [nickname, setNickname] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const [abilities, setAbilities] = useState<string>("");
+    const [description, setDescription] = useState<string>("");
+    const [catch_phrase, setCatchPhrase] = useState<string>("");
+    const { addHero } = useHeroStore();
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        addHero({
+            nickname,
+            real_name: name,
+            origin_description: description,
+            superpowers: abilities.split(","),
+            catch_phrase,
+        });
+        onClose(); //close modal
+    };
+
     return (
         <div className={styles.modal}>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className={styles.close} onClick={onClose}>
                     <CircleX color="#595cf6" size={36} />
                 </div>
@@ -24,6 +45,9 @@ const Modal: FC<IModal> = ({ onClose }) => {
                         placeholder="Spider-man"
                         required
                         name="heroname"
+                        value={nickname}
+                        readOnly={false}
+                        onChange={(e) => setNickname(e.target.value)}
                     />
                 </div>
 
@@ -36,18 +60,22 @@ const Modal: FC<IModal> = ({ onClose }) => {
                         placeholder="Peter Parker"
                         required
                         name="name"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </div>
 
                 <div className={styles.field}>
                     <label htmlFor="abilities">
-                        Abilities <span>*</span>
+                        Abilities (use coma to separate them) <span>*</span>
                     </label>
                     <input
                         type="text"
                         placeholder="Flight"
                         required
                         name="abilities"
+                        value={abilities}
+                        onChange={(e) => setAbilities(e.target.value)}
                     />
                 </div>
 
@@ -55,15 +83,26 @@ const Modal: FC<IModal> = ({ onClose }) => {
                     <label htmlFor="desc">
                         Description <span>*</span>
                     </label>
-                    <textarea placeholder="Description" required name="desc" />
+                    <textarea
+                        placeholder="Description"
+                        required
+                        name="desc"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
                 </div>
 
                 <div className={styles.field}>
-                    <label htmlFor="phrase">Catch phrase</label>
+                    <label htmlFor="phrase">
+                        Catch phrase <span>*</span>
+                    </label>
                     <input
                         type="text"
                         placeholder="With great power comes great responsibility"
+                        required
                         name="phrase"
+                        value={catch_phrase}
+                        onChange={(e) => setCatchPhrase(e.target.value)}
                     />
                 </div>
 

@@ -6,13 +6,20 @@ import Hero from "../../components/Hero/Hero";
 import { useHeroStore } from "../../store/heroes.store";
 
 const HomePage: FC = () => {
-    const { fetchAllHeroes, allHeroes, isLoading } = useHeroStore();
+    const { fetchAllHeroes, allHeroes, isLoading, setIsDeleted, isDeleted } =
+        useHeroStore();
 
     useEffect(() => {
         if (!allHeroes) {
             fetchAllHeroes();
         }
     }, []);
+
+    useEffect(() => {
+        if (isDeleted) {
+            setIsDeleted(false); //if we don't reset this state on the MainPage, isDeleted will be true on the HeroPage
+        }
+    }, [isDeleted]);
 
     return (
         <div className={styles.home}>

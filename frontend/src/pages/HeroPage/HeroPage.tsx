@@ -9,25 +9,24 @@ import Hero from "../../components/Hero/Hero";
 const HeroPage: FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
-    const location = useLocation();
-    const { fetchOneHero, oneHero, isLoading, isDeleted, setIsDeleted } =
-        useHeroStore();
+    const { fetchOneHero, oneHero, isLoading, isDeleted } = useHeroStore();
 
     useEffect(() => {
         fetchOneHero(id!);
     }, []);
 
     useEffect(() => {
-        if (isDeleted && location.pathname !== "/") {
-            setIsDeleted(false);
+        if (isDeleted) {
             toast("You will be redirected to the homepage in 3 seconds!", {
                 icon: "⚠️",
             });
-            setTimeout(() => {
+            const timer = setTimeout(() => {
                 navigate("/");
             }, 3000);
+
+            return () => clearTimeout(timer);
         }
-    }, [isDeleted, navigate, setIsDeleted]);
+    }, [isDeleted, navigate]);
 
     return (
         <div className={styles.hero}>

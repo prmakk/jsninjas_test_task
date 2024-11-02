@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+@import "../../styles/mixins.scss";
+
+.pagination {
+    display: flex;
+    gap: 5px;
+
+    .button {
+        @include button();
+    }
+
+    .active {
+        @include button();
+        background-color: darken($mainColor, 10%);
+    }
+}

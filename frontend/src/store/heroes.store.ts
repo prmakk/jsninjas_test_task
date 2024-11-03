@@ -13,6 +13,7 @@ interface IStore {
     fetchOneHero: (id: string) => Promise<void>;
     deleteHero: (id: string) => Promise<void>;
     addHero: (inputData: any) => Promise<void>;
+    updateHero: (id: string, inputData: any) => Promise<void>;
 }
 
 export const useHeroStore = create<IStore>((set, get) => ({
@@ -63,6 +64,14 @@ export const useHeroStore = create<IStore>((set, get) => ({
             await axios.post("/api/v1/create", inputData);
             await get().fetchAllHeroes();
             toast.success("Hero added successfully");
+        } catch (error: any) {
+            toast.error(error.response.data.message || "An error occurred");
+        }
+    },
+    updateHero: async (id, inputData) => {
+        try {
+            await axios.put(`/api/v1/heroes/${id}`, inputData);
+            await get().fetchAllHeroes();
         } catch (error: any) {
             toast.error(error.response.data.message || "An error occurred");
         }

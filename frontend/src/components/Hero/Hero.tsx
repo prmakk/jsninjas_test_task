@@ -5,7 +5,9 @@ import styles from "./Hero.module.scss";
 import Ability from "../Ability/Ability";
 import IHero from "../../types/types";
 import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 import { useHeroStore } from "../../store/heroes.store";
+import Modal from "../Modal/Modal";
 
 const Hero: FC<IHero> = ({
     _id,
@@ -16,7 +18,14 @@ const Hero: FC<IHero> = ({
     catch_phrase,
 }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isForEdit, setIsForEdit] = useState<boolean>(false);
     const { deleteHero } = useHeroStore();
+
+    const handleEditForm = () => {
+        setIsModalOpen(true);
+        setIsForEdit(true);
+    };
 
     return (
         <div
@@ -24,9 +33,27 @@ const Hero: FC<IHero> = ({
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
+            {/* PORTALS SECTION FOR MODALS */}
+            {isModalOpen &&
+                createPortal(
+                    //sending modal to the top of DOM
+                    <Modal
+                        onClose={() => setIsModalOpen(false)}
+                        isForEdit={isForEdit}
+                        id={_id}
+                        nick={nickname}
+                        real_name={real_name}
+                        origin_description={origin_description}
+                        superpowers={superpowers}
+                        phrase={catch_phrase}
+                    />,
+                    document.getElementById("modal-root")!
+                )}
             {isHovered ? (
                 <div className={styles.nav}>
-                    <Pencil size={18} />
+                    {location.pathname !== "/" ? ( //we can't edit hero from the main page
+                        <Pencil size={18} onClick={() => handleEditForm()} />
+                    ) : null}
                     <Trash size={18} onClick={() => deleteHero(_id)} />
                 </div>
             ) : null}

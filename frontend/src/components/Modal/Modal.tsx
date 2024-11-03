@@ -7,17 +7,37 @@ import styles from "./Modal.module.scss";
 
 interface IModal {
     onClose: () => void;
+    isForEdit: boolean;
+    id: string;
+    nick: string;
+    real_name: string;
+    origin_description: string;
+    superpowers: [];
+    phrase?: string;
 }
 
-const Modal: FC<IModal> = ({ onClose }) => {
-    const [nickname, setNickname] = useState<string>("");
-    const [name, setName] = useState<string>("");
-    const [abilities, setAbilities] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-    const [catch_phrase, setCatchPhrase] = useState<string>("");
-    const { addHero } = useHeroStore();
+const Modal: FC<IModal> = ({
+    onClose,
+    isForEdit,
+    id,
+    nick,
+    real_name,
+    origin_description,
+    superpowers,
+    phrase,
+}) => {
+    const [nickname, setNickname] = useState<string>(nick || "");
+    const [name, setName] = useState<string>(real_name || "");
+    const [abilities, setAbilities] = useState<string>(
+        Array.isArray(superpowers) ? superpowers.join(",") : ""
+    );
+    const [description, setDescription] = useState<string>(
+        origin_description || ""
+    );
+    const [catch_phrase, setCatchPhrase] = useState<string>(phrase || "");
+    const { addHero, updateHero, fetchOneHero } = useHeroStore();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleCreateSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         addHero({
             nickname,
@@ -29,9 +49,22 @@ const Modal: FC<IModal> = ({ onClose }) => {
         onClose(); //close modal
     };
 
+    const handleEditSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        updateHero(id, {
+            nickname,
+            real_name: name,
+            origin_description: description,
+            superpowers: abilities.split(","),
+            catch_phrase,
+        });
+        fetchOneHero(id);
+        onClose(); //close modal
+    };
+
     return (
         <div className={styles.modal}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={isForEdit ? handleEditSubmit : handleCreateSubmit}>
                 <div className={styles.close} onClick={onClose}>
                     <CircleX color="#595cf6" size={36} />
                 </div>
@@ -116,7 +149,11 @@ const Modal: FC<IModal> = ({ onClose }) => {
                     </label>
                 </div>
 
-                <button type="submit">Add hero</button>
+                {isForEdit ? (
+                    <button type="submit">Edit hero</button>
+                ) : (
+                    <button type="submit">Add hero</button>
+                )}
             </form>
         </div>
     );

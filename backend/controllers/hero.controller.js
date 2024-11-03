@@ -70,7 +70,7 @@ export async function createHero(req, res) {
 
 export async function getAllHeroes(req, res) {
     try {
-        const all_heroes = await Hero.find();
+        const all_heroes = await Hero.find().sort({ createdAt: -1 });
 
         res.status(200).json({ success: true, heroes: all_heroes });
     } catch (error) {

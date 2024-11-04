@@ -35,15 +35,11 @@
         }
     }
 
-    .image {
-        flex-shrink: 0;
+    .image img {
         max-width: 150px;
         width: 100%;
-        background-image: url("https://static.wikia.nocookie.net/marvel_dc/images/a/a5/Superman_Vol_5_1_Textless.jpg");
         aspect-ratio: 1/1;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
+        object-fit: cover;
         border-radius: 50%;
     }
 

@@ -51,6 +51,7 @@ const HomePage: FC = () => {
                     real_name={hero.real_name}
                     origin_description={hero.origin_description}
                     superpowers={hero.superpowers}
+                    images={hero.images}
                 />
             ))}
             {typeof allHeroes !== null ? (

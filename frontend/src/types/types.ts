@@ -5,6 +5,7 @@ interface IHero {
     origin_description: string;
     superpowers: [];
     catch_phrase?: string;
+    images?: [];
 }
 
 export default IHero;

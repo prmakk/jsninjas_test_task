@@ -35,17 +35,31 @@ const Modal: FC<IModal> = ({
         origin_description || ""
     );
     const [catch_phrase, setCatchPhrase] = useState<string>(phrase || "");
+    const [file, setFile] = useState<File | undefined>(undefined);
     const { addHero, updateHero, fetchOneHero } = useHeroStore();
+
+    const handleOnChange = (e: React.FormEvent<HTMLInputElement>) => {
+        const target = e.target as HTMLInputElement & {
+            files: FileList;
+        };
+        setFile(target.files[0]);
+    };
 
     const handleCreateSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        addHero({
-            nickname,
-            real_name: name,
-            origin_description: description,
-            superpowers: abilities.split(","),
-            catch_phrase,
-        });
+        const formData = new FormData();
+        formData.append("nickname", nickname);
+        formData.append("real_name", name);
+        formData.append("origin_description", description);
+        formData.append("superpowers", abilities);
+        formData.append("catch_phrase", catch_phrase);
+
+        if (typeof file !== "undefined") {
+            formData.append("file", file);
+        }
+
+        addHero(formData);
+
         onClose(); //close modal
     };
 
@@ -145,7 +159,12 @@ const Modal: FC<IModal> = ({
                         <div className={styles.icon}>
                             <Upload size={64} />
                         </div>
-                        <input id="file" type="file" name="file" />
+                        <input
+                            id="file"
+                            type="file"
+                            name="file"
+                            onChange={handleOnChange}
+                        />
                     </label>
                 </div>
 

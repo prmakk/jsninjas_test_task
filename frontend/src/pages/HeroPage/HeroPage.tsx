@@ -40,6 +40,7 @@ const HeroPage: FC = () => {
                     origin_description={oneHero?.origin_description!}
                     superpowers={oneHero?.superpowers!}
                     catch_phrase={oneHero?.catch_phrase}
+                    images={oneHero?.images}
                 />
             )}
         </div>

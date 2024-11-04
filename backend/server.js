@@ -15,6 +15,7 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use("/uploads", express.static("backend/uploads"));
 
 app.use("/api/v1/", heroRoutes);
 

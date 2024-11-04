@@ -10,6 +10,8 @@ export async function createHero(req, res) {
             catch_phrase,
         } = req.body;
 
+        const file = req.file;
+
         if (
             !nickname ||
             !real_name ||
@@ -51,6 +53,7 @@ export async function createHero(req, res) {
             origin_description,
             superpowers,
             catch_phrase,
+            images: file,
         });
 
         await newHero.save();

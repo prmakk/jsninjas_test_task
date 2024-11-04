@@ -16,6 +16,7 @@ const Hero: FC<IHero> = ({
     origin_description,
     superpowers,
     catch_phrase,
+    images,
 }) => {
     const [isHovered, setIsHovered] = useState<boolean>(false);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -58,7 +59,20 @@ const Hero: FC<IHero> = ({
                 </div>
             ) : null}
 
-            <div className={styles.image}></div>
+            <div className={styles.image}>
+                {images && images.length > 0 ? (
+                    <img
+                        // @ts-ignore
+                        src={`http://localhost:5000/uploads/${images[0]?.filename}`}
+                        alt="Hero Image"
+                    />
+                ) : (
+                    <img
+                        src="https://png.pngtree.com/png-vector/20191021/ourmid/pngtree-vector-question-mark-icon-png-image_1834249.jpg"
+                        alt="Default Image"
+                    />
+                )}
+            </div>
 
             <div className={styles.info}>
                 <Link to={`/heroes/${_id}`}>

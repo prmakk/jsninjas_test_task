@@ -4,6 +4,9 @@ Tesk task for JS Ninjas using ReactTS, Zustand, ExpressJS, MongoDB
 
 ## Demo
 
+**Screenshot**
+![App preview](https://i.ibb.co/rvGC278/image.png)
+**Video**
 ![App preview](https://s1.gifyu.com/images/SyzBL.gif?raw=true)
 
 ## What is realized

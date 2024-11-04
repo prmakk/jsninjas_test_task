@@ -51,7 +51,9 @@ const Modal: FC<IModal> = ({
         formData.append("nickname", nickname);
         formData.append("real_name", name);
         formData.append("origin_description", description);
-        formData.append("superpowers", abilities);
+        abilities.split(",").forEach((ability) => {
+            formData.append("superpowers", ability.trim());
+        });
         formData.append("catch_phrase", catch_phrase);
 
         if (typeof file !== "undefined") {

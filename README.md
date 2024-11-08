@@ -1,6 +1,7 @@
 # Superhero full-stack application
 
 Tesk task for JS Ninjas using ReactTS, Zustand, ExpressJS, MongoDB
+Upd: I got an invitation for tech interview :)
 
 ## Demo
 

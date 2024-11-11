@@ -1,7 +1,7 @@
 # Superhero full-stack application
 
-Tesk task for JS Ninjas using ReactTS, Zustand, ExpressJS, MongoDB
-Upd: I got an invitation for tech interview :)
+Tesk task for JS Ninjas using ReactTS, Zustand, ExpressJS, MongoDB.
+Tech interview was about fucking puzzles and simple IQ questions. The most ridiculous tech interview I have ever seen.
 
 ## Demo
 
